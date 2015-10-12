@@ -42,5 +42,4 @@ describe 'SessionsController' do
       expect(last_response).to be_redirect
     end
   end
-
 end
