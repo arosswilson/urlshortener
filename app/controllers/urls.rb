@@ -2,7 +2,7 @@ require 'pry'
 require 'sinatra/flash'
 enable :sessions
 get '/urls' do
-  @urls = Url.order("access_count DESC")
+  @urls = Url.order("access_count DESC").limit(100)
   erb :"urls/index"
 end
 
