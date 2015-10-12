@@ -1,4 +1,4 @@
-.container {
+/*.container {
   margin: 20px auto;
   width: 600px;
   padding: 0px 20px 20px 20px;
@@ -6,4 +6,72 @@
 }
 th {
   text-align: left;
+}*/
+.url-bottom div {
+  display: inline-block;
+}
+
+.url-list {
+  list-style: none;
+}
+
+.single-url {
+  border: 1px solid grey;
+  width: 30em;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border-radius: 3px;
+  background-color: #e0e0e0;
+}
+
+.url-top {
+  margin: 10px;
+}
+
+.url-bottom {
+  margin: 10px;
+}
+
+.count {
+  float: right;
+}
+
+.create-url {
+  margin:0 auto;
+  width: 50%;
+  float: left;
+}
+
+.top-hundred {
+  width: 50%;
+  float: left;
+}
+
+.create-url-form {
+  margin:0 auto;
+}
+
+#view-header {
+  text-align: center;
+}
+
+.signin {
+  background-color: #e0e0e0;
+  width: 30%;
+  padding: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+.user-view h3 {
+  text-align: center;
+}
+
+#deletebutton {
+  float: right;
+  margin-left: 10px;
+}
+
+.top-hundred h3 {
+  text-align: center;
 }
