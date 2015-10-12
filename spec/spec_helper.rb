@@ -1,4 +1,25 @@
 require 'rubygems'
+require 'rack/test'
+require 'sinatra'
+require 'rspec'
+require 'shoulda-matchers'
+require 'database_cleaner'
+
+def app
+  Sinatra::Application
+end
+
+RSpec.configure do |conf|
+  conf.include Rack::Test::Methods
+
+  conf.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  conf.before(:each) { DatabaseCleaner.start }
+  conf.after(:each)  { DatabaseCleaner.clean }
+end
 
 # All our specs should require 'spec_helper' (this file)
 
