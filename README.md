@@ -1,6 +1,7 @@
 # Url Shortener
-
-## setup
+ You can access the live url shortener here: [http://polar-inlet-2628.herokuapp.com/](http://polar-inlet-2628.herokuapp.com/)
+ 
+## setup to run locally
 
 (these assume that you have ruby and bundler installed on your computer)
 
@@ -23,6 +24,13 @@
 5.  now open up a browser (preferably chrome) and go to this link: [http://localhost:9393/](http://localhost:9393/)
 6.  From here you can create shortened urls (you don't need to be signed in to do this).
 7.  You can also create an account under the sign up link and keep track of the shortened urls you create
+8.  If you want to run the tests from the urlshortener directory, run:
+
+    `$ bundle exec rake db:test:prepare`
+    
+    then
+    
+    `$ bundle exec rspec spec/`
 
 ## challenges
 
