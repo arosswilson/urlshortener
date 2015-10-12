@@ -4,7 +4,10 @@
 
 (these assume that you have ruby and bundler installed on your computer)
 
-1.  unzip the file in a location that you remember
+1.  clone this repo onto your computer. once you copy the link on the right, you can open up your terminal app and move ('cd') into a directory where you want the app to live then clone it with:
+
+    `$ git clone https://github.com/arosswilson/urlshortener.git`
+
 2.  open your terminal and move ('cd') into the urlshortener directory and run 'bundle install'
 
     `$ bundle install`
@@ -44,6 +47,3 @@ I'm currently using at 62 character key (lowercase letters, numbers, and capital
 3. I'd want to spend more time in the testing suite and make sure the tests are thorough and coprehensive.
 
 
-
-
-[HTTP status cats]: http://httpcats.herokuapp.com/
