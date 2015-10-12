@@ -38,4 +38,12 @@ describe 'UsersController' do
       expect(last_response.body).to include('Greetings barry!')
     end
   end
+
+  describe 'delete user' do
+    it "should delete a user" do
+      user = User.create(username: 'larry', password: 'test')
+      delete 'users/9'
+      expect(User.find_by(username: 'larry')).to be_falsey
+    end
+  end
 end

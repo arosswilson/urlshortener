@@ -21,8 +21,6 @@ describe 'SessionsController' do
     end
   end
 
-
-
   describe "POST #sessions" do
     it "should login a user with correct credentials" do
       post '/sessions', {username: @user.username, password: "test"}
@@ -42,5 +40,4 @@ describe 'SessionsController' do
       expect(last_response).to be_redirect
     end
   end
-
 end

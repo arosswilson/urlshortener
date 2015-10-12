@@ -1,8 +1,19 @@
 <div class="container user-view">
-  <h3>Greetings <%= @user.username %>! Here are the link's you've created.</h3>
-  <ul>
-    <% @user.urls.each do |url| %>
-      <%= erb :'/urls/_url', locals: {url: url}%>
-    <% end %>
-  </ul>
+  <div class="user-links">
+    <h3>Greetings <%= @user.username %>! Here are the link's you've created.</h3>
+    <ul>
+      <% @user.urls.each do |url| %>
+        <%= erb :'/urls/_url', locals: {url: url}%>
+      <% end %>
+    </ul>
+    <div class="delete-account">
+      <% if current_user %>
+        <form action="/users/<%=current_user.id%>" method="post">
+          <input type="hidden" name="_method" id="" value="DELETE" >
+          <label for="user-delete">If you'd like to delete your account, click here.</label>
+          <input type="submit" id="user-delete"class="btn btn-primary btn-large btn-block" value="Delete">
+        </form>
+      <% end %>
+    </div>
+  </div>
 </div>
