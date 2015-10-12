@@ -1,172 +1,49 @@
-# Sinatra Url Shortener
+# Url Shortener
 
-## Learning Competencies
+## setup
 
-* Map the flow of data through a web application
-* Use redirect
-* Use Active Record callbacks
+(these assume that you have ruby and bundler installed on your computer)
 
-## Summary
+1.  unzip the file in a location that you remember
+2.  open your terminal and move ('cd') into the urlshortener directory and run 'bundle install'
 
-We're going to build a simple link shortener, a la [bitly][].
+    `$ bundle install`
+    
+3.  create, migrate and seed the database. run this:
 
-You'll have one model `Url`, which is a list of URLs that people have entered.
+    `$ bundle exec rake db:create db:migrate`
+    
+4.  start your server. Warning, this will run a server on port 9393 by default.
 
-## Releases
+    `$ bundle exec shotgun`
+    
+5.  now open up a browser (preferably chrome) and go to this link: [http://localhost:9393/](http://localhost:9393/)
+6.  From here you can create shortened urls (you don't need to be signed in to do this).
+7.  You can also create an account under the sign up link and keep track of the shortened urls you create
 
-### Release 0: Simple Shortener
+## challenges
 
-Start with the empty Sinatra skeleton in `source`.
+1. The biggest challenge I had was determining when to stop adding features. Eventually I had to write down everything I wanted to add and prioritize the list. I told myself that I wouldn't add any new features after Sunday at noon.
+2. I chose to use Sinatra (I'll get into the why later), and it's simplicity is a gift and curse. I struggled because there are a many things that rails just gives you like flash notifications and a more rspec methods. I searched for a gem that would cover flash notifications and researched what others do to test certain scenarios.
+3. I also ran into a lot of issues with sinatra configuration. My skeleton wasn't configured for testing (wasn't creating testing databases), and the spec helper wasn't very good. Here I also researched ways to fix it online and compared it to other skeleton's I have used in the past.
 
-We have one resource: `Urls`.  For our controllers, we have a URL that lists
-all our `Url` objects and another URL that, when POSTed to, creates a `Url`
-object.
+## Reasoning behind design decisions
+1. I chose to use sinatra, because this app didn't seem like a massive app. Additionally, there aren't a lot of forms for people to fill out, so I didn't need tons or form helpers. I think sinatra was the right move, but as stated in the section above, it presented some issues. If there were a lot more things to crud then rails would probably make more sense
+2. Originally I just had a url model. I decided to add a user model later, because I thought it would be nice for users to be able to track the urls they create. That said, you don't have to be logged in to create a url. I did this on purpose - some people may just want to quickly get a shortened url, so this caters to their need.
+3. I kept the url creator and top 100 urls on the same page, because these two things are the bulk of the requirements. That way the user can benefit from the main features of the site right on the first page.
 
-We'll also need a URL that redirects us to the full (unshortened) URL.  If
-you've never used bitly, use it now to get a feel for how it works.
 
-The controller methods should look like this:
+## How did I come up with Short URL scheme
 
-```ruby
-get '/' do
-  # let user create new short URL, display a list of shortened URLs
-end
+I'm currently using at 62 character key (lowercase letters, numbers, and capital letters) and I'll create the url object before I create the short url. Once it is create, I take the id of that object, take the modulo of the id (with 62 since the key is 62 characters long), assign a letter for the shortcode based on the modulus (I use the modulus as the index of the character key to get a specific letter), then divide the url id by 62 and repeat until the url id is zero. I could potentially make the short code smaller by adding some characters to the key (maybe '-' or '_'). Also, there are concerns about some letters I've left in - some ids will generate explicit words, so I would likely need to remove vowels from the key.
 
-post '/urls' do
-  # create a new Url
-end
+## future improvements
 
-# e.g., /q6bda
-get '/:short_url' do
-  # redirect to appropriate "long" URL
-end
-```
+1. I would add more information to the User and URL models. Currently I you can't update Users or Urls, which is OK now because there aren't really many things that you could update. In the future, it would be cool to get the users email and maybe more info. Additionally, it'd be nice to get more stats about the url: what browsers are people using, where is the click coming from(twitter? a blog?) etc.
+2. I'd also want to update the styling a lot. There's not a unique feel or brand associated with the site yet.
+3. I'd want to spend more time in the testing suite and make sure the tests are thorough and coprehensive.
 
-Use a `before_save` callback in the `Url` model to generate the short URL.
 
-### Release 1:  Add a Counter!
 
-Add a `click_count` field to your `urls` table, which keeps track of how many
-times someone has visited the shortened URL.  Add code to the appropriate place
-in your controller code so that any time someone hits a short URL the counter
-for the appropriate `Url` is incremented by 1.
 
-### Release 2: Add Validations
-
-Add a validation to your `Url` model so that only `Urls` with valid URLs get
-saved to the database.  Read up on [ActiveRecord validations][]
-
-What constitutes a "valid URL" is up to you.  It's a sliding scale, from
-validations that would permit lots of invalid URLs to validations that might
-reject lots of valid URLs.  When you get into it you'll see that expressing the
-fact "x is a valid URL" in Ruby Land or SQL Land is never perfect.
-
-For example, the valid URL could range across:
-
-**A valid URL is...**
-
-* Any non-empty string
-* Any non-empty string that starts with "http://" or "https://"
-* Any string that the [Ruby URI module][URI module] says is valid
-* Any URL-looking thing which responds to a HTTP request, i.e., we actually check to see if the URL is accessible via HTTP
-
-Some of these are easily expressible in SQL Land.  Some of these are hard to
-express in SQL Land, but ActiveRecord comes with pre-built validation helpers
-that make it easy to express in Ruby Land.  Others require [custom
-validations][] that express logic unique to our application domain.
-
-The rule of thumb is that where we can, we want to always express constraints
-in Ruby Land and also express them in SQL Land where feasible.
-
-### Release 3: Add Error Handling
-
-When you try to save (create or update) an ActiveRecord object that has invalid
-data, ActiveRecord will fail.  Some methods like `create!` and `save!` throw an
-exception.  Others like `create`  (without the `!` bang) return the  resulting
-object whether the object was saved successfully to the database or not, while
-`save` will return `false` if perform_validation is true and any validations
-fail.  See [create][] and [save][] for more information.
-
-You can always call [valid? or invalid?][valid invalid] on an ActiveRecord
-object to see whether its data is valid or invalid.
-
-Use this and the [errors][] method to display a helpful error message if a user
-enters an invalid URL, giving them the opportunity to correct their error.
-
-## Optimize Your Learning
-
-### More on Validations, Constraints, and Database Consistency
-
-We often want to put constraints on what sort of data can go into our database.
-This way we can guarantee that all data in the database conforms to certain
-standards, e.g., there are no users missing an email address.  Guarantees of
-this kind &mdash; ensuring that the data in our database is never confusing or
-contradictory or partially changed or otherwise invalid &mdash; are called
-**consistency**.
-
-If we think of this as a fact from Fact Land, these constraints look like:
-
-* A user must have a first\_name
-* A user must have an email
-* Two user's can't have the same email address, or equivalently, each user's email must be unique
-* A Craigslist post's URL must be a valid URL, for some reasonable definition of valid
-
-These facts can be recorded in both SQL Land and in Ruby Land, like this:
-
-<table class="table table-bordered table-striped">
-  <tr>
-    <th>Fact Land</th>
-    <th>SQL Land</th>
-    <th>Ruby Land</th>
-  </tr>
-  <tr>
-    <td>A user must have an email address</td>
-    <td><code>NOT NULL</code> constraint on <code>email</code> field</td>
-    <td><code>validates :email, :presence => true</code></td>
-  </tr>
-  <tr>
-    <td>A user must have a first name</td>
-    <td><code>NOT NULL</code> constraint on <code>first_name</code> field</td>
-    <td><code>validates :first_name, :presence => true</code></td>
-  </tr>
-  <tr>
-    <td>A user's email address must be unique</td>
-    <td><code>UNIQUE INDEX</code> on <code>email</code> field</td>
-    <td><code>validates :email, :uniqueness => true</code></td>
-  </tr>
-</table>
-
-### Learning your HTTP status codes
-
-Each HTTP transaction **MUST** return a status code.  The one you're familiar
-with is `404` (Not Found!).  You should investigate your app or watch the web
-server logs from Sinatra and see which HTTP codes it sends for a static page,
-or for a redirect.  Spend some time getting to know your [HTTP status codes].
-You will, **very likely** be asked about them in interviews as it's a way to
-separate the clowns from the people you want to hire.
-
-You may find them easier to memorize if you have help from [HTTP status cats][]
-
-## Resources
-
-* [Bit.ly, a url shortening service][bitly]
-* [ActiveRecord validations][]
-* [URI module][]
-* [Active record custom validations][custom validations]
-* [ActiveRecord create][create]
-* [ActiveRecord save][save]
-* [ActiveRecord's valid? &amp; invalid?][valid invalid]
-* [ActiveRecord's errors object][errors]
-* [HTTP status codes][]
-* [HTTP status cats][]
-
-[bitly]: http://bitly.com/
-[ActiveRecord validations]: http://guides.rubyonrails.org/active_record_validations.html
-[URI module]: http://www.ruby-doc.org/stdlib-1.9.3/libdoc/uri/rdoc/URI.html
-[custom validations]: http://guides.rubyonrails.org/active_record_validations.html#performing-custom-validations
-[create]: http://apidock.com/rails/ActiveRecord/Base/create/class
-[save]: http://apidock.com/rails/ActiveRecord/Base/save
-[valid invalid]: http://guides.rubyonrails.org/active_record_validations.html#valid-questionmark-and-invalid-questionmark
-[errors]: http://guides.rubyonrails.org/active_record_validations.html#validations-overview-errors
-[HTTP status codes]: http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 [HTTP status cats]: http://httpcats.herokuapp.com/
