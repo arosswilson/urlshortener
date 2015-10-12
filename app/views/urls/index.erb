@@ -1,0 +1,27 @@
+
+<div class="container create-url">
+  <div class="create-url-form">
+    <div class="notice">
+      <% if flash[:notice] %>
+        <%= flash[:notice] %>
+      <% end %>
+    </div>
+    <form action="/urls" method="post">
+      <div class="form-group">
+        <label for="create-url">Enter a Url that you would like shortened!</label>
+        <input type="text" class="form-control"id="create-url" name="url[full_url]" placeholder= >
+      </div>
+      <input type="submit" id="url-creator"class="btn btn-primary btn-large btn-block">
+    </form>
+  </div>
+  <br><br>
+  <div class="new-urls"></div>
+</div>
+<div class="top-hundred">
+  <h3>100 Most Used Links</h3>
+  <ul>
+    <% @urls.each do |url| %>
+      <%= erb :'urls/_url', locals: {url: url} %>
+    <% end %>
+  </ul>
+</div>

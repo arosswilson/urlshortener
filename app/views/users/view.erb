@@ -1,0 +1,8 @@
+<div class="container user-view">
+  <h3>Greetings <%= @user.username %>! Here are the link's you've created.</h3>
+  <ul>
+    <% @user.urls.each do |url| %>
+      <%= erb :'/urls/_url', locals: {url: url}%>
+    <% end %>
+  </ul>
+</div>
