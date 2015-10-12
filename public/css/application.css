@@ -16,12 +16,12 @@ th {
 }
 
 .single-url {
-  border: 1px solid grey;
+  border: 1px solid lightgrey;
   width: 30em;
   margin: 0 auto;
   margin-bottom: 20px;
   border-radius: 3px;
-  background-color: #e0e0e0;
+  background-color: #f6f6f6;
 }
 
 .url-top {
@@ -56,7 +56,7 @@ th {
 }
 
 .signin {
-  background-color: #e0e0e0;
+  background-color: #f6f6f6;
   width: 30%;
   padding: 10px;
   border: 1px solid lightgrey;
@@ -74,6 +74,7 @@ th {
 
 .top-hundred h3 {
   text-align: center;
+  color: grey;
 }
 
 .user-links {
@@ -83,4 +84,5 @@ th {
 
 .create-url-form .form-group {
   text-align: center;
+  color: grey;
 }
