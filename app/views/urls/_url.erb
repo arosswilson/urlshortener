@@ -1,0 +1,24 @@
+<li class="url-list">
+  <div class= "single-url .col-xs-12 .col-sm-6 .col-md-8">
+    <div class="url-top" >
+      <p><%= url.month_and_day%></p>
+      <p><%= url.full_url %></p>
+      <div id="deletebutton">
+        <% if current_users_url(url) %>
+          <form action="/urls/<%=url.id%>" method="post">
+            <input type="hidden" name="_method" id="" value="DELETE" >
+            <input type="submit" value="Delete">
+          </form>
+        <% end %>
+      </div>
+    </div>
+    <div class="url-bottom">
+      <div>
+        <a href="/<%= url.short_code %>"><%=domain%>/<%=url.short_code%> </a>
+      </div>
+      <div class="count">
+        Count: <%= url.access_count %>
+      </div>
+  </div>
+</li>
+
