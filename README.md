@@ -34,6 +34,7 @@
 1. I chose to use sinatra, because this app didn't seem like a massive app. Additionally, there aren't a lot of forms for people to fill out, so I didn't need tons or form helpers. I think sinatra was the right move, but as stated in the section above, it presented some issues. If there were a lot more things to crud then rails would probably make more sense
 2. Originally I just had a url model. I decided to add a user model later, because I thought it would be nice for users to be able to track the urls they create. That said, you don't have to be logged in to create a url. I did this on purpose - some people may just want to quickly get a shortened url, so this caters to their need.
 3. I kept the url creator and top 100 urls on the same page, because these two things are the bulk of the requirements. That way the user can benefit from the main features of the site right on the first page.
+4. Because there are not a ton of requirements, I really wanted to keep the site simple. I have ajaxed the url creation if javascript is on in your browser, so the user can quickly/easily create new urls and see the top 100.
 
 
 ## How did I come up with Short URL scheme
