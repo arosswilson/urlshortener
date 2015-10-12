@@ -46,5 +46,6 @@ I'm currently using at 62 character key (lowercase letters, numbers, and capital
 1. I would add more information to the User and URL models. Currently I you can't update Users or Urls, which is OK now because there aren't really many things that you could update. In the future, it would be cool to get the users email and maybe more info. Additionally, it'd be nice to get more stats about the url: what browsers are people using, where is the click coming from(twitter? a blog?) etc.
 2. I'd also want to update the styling a lot. There's not a unique feel or brand associated with the site yet.
 3. I'd want to spend more time in the testing suite and make sure the tests are thorough and coprehensive.
+4. I would also want to handle the flash notices better. They should definitely be in the layout, but currently they are spread out over different views. I would also want to do some styling with them.
 
 
