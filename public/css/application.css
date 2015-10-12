@@ -65,6 +65,7 @@ th {
 
 .user-view h3 {
   text-align: center;
+  margin-left: 40px;
 }
 
 #deletebutton {
@@ -85,4 +86,9 @@ th {
 .create-url-form .form-group {
   text-align: center;
   color: grey;
+}
+
+.delete-account {
+  padding-left: 40px;
+  text-align: center;
 }
