@@ -25,5 +25,4 @@ describe 'Url' do
     url.increment_count
     expect(url.access_count).to eq(1)
   end
-
 end
